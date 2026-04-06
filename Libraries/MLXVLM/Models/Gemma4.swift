@@ -3,6 +3,7 @@ import Foundation
 import MLX
 import MLXLMCommon
 import MLXNN
+import Tokenizers
 
 // Based on https://github.com/Blaizzy/mlx-vlm/tree/main/mlx_vlm/models/gemma4
 
