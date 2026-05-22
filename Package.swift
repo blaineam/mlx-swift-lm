@@ -44,12 +44,18 @@ let package = Package(
         //   MLXFast.preadInto, prefault               (SSD streaming)
         // We MUST depend on the SharpAI fork, NOT ml-explore/mlx-swift.
         //
-        // This package uses a local path reference so the exact commit is
-        // controlled by WhichEver repo (SwiftLM) has both as submodules.
-        // In standalone CI, the checkout step clones SharpAI/mlx-swift
-        // into ../mlx-swift so this path resolves correctly.
         // ─────────────────────────────────────────────────────────────────────────
-        .package(path: "../mlx-swift"),
+        // Patched in `turboquant` branch of blaineam/mlx-swift-lm: this fork
+        // is consumed via remote SPM by the Ari app (Xcode project, not
+        // submodules). Local-path deps can't be transitively resolved through
+        // a remote SPM consumer, so we point at SharpAI/mlx-swift's tag b469
+        // explicitly. Bump this revision in lockstep with sharpai/main if the
+        // TurboKV / SSD-streaming Metal ops surface area changes.
+        // ─────────────────────────────────────────────────────────────────────────
+        .package(
+            url: "https://github.com/SharpAI/mlx-swift.git",
+            revision: "133864c733c8"
+        ),
 
         .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "600.0.0-latest"),
     ],
